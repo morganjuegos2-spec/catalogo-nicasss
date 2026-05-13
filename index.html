@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nica's Diseños | Líneas Oficiales</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --neon-cyan: #00e5ff;
+            --neon-pink: #ff00ab;
+            --neon-yellow: #faff00; 
+            --bg-gradient: linear-gradient(135deg, #f1f5f9 0%, #cbd5e1 100%);
+            --text-dark: #0f172a;
+            --text-muted: #475569;
+            --card-white: #ffffff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            cursor: none !important;
+        }
+
+        body {
+            background: var(--bg-gradient);
+            background-attachment: fixed;
+            font-family: 'Outfit', sans-serif;
+            color: var(--text-dark);
+            min-height: 100vh;
+        }
+
+        #cursor-dot {
+            width: 10px;
+            height: 10px;
+            background: var(--neon-yellow);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 10000;
+            box-shadow: 0 0 12px var(--neon-yellow);
+        }
+
+        #cursor-ring {
+            width: 38px;
+            height: 38px;
+            border: 2px solid var(--neon-cyan);
+            border-radius: 50%;
+            position: fixed;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.15s ease-out;
+        }
+
+        header {
+            padding: 50px 20px;
+            text-align: center;
+        }
+
+        .logo-main {
+            max-width: 280px;
+            height: auto;
+            display: inline-block;
+        }
+
+        .nav-container {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(12px);
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+        }
+
+        .nav-link {
+            padding: 12px 25px;
+            background: #fff;
+            border: 2px solid var(--neon-pink);
+            color: var(--neon-pink);
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            transition: 0.3s;
+        }
+
+        .nav-link.active {
+            background: var(--neon-pink);
+            color: #fff;
+            box-shadow: 0 5px 15px rgba(255, 0, 171, 0.3);
+        }
+
+        .catalog-section { padding: 40px 20px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 40px;
+        }
+
+        .card {
+            background: var(--card-white);
+            border-radius: 25px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            transition: 0.4s ease;
+        }
+
+        .card:hover { transform: translateY(-5px); }
+
+        .card-img-box {
+            width: calc(100% - 30px);
+            height: 280px;
+            margin: 15px auto 0;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 3px solid var(--neon-cyan);
+            box-shadow: 0 0 15px var(--neon-cyan);
+            background: #f8fafc;
+        }
+
+        .card:nth-child(even) .card-img-box {
+            border-color: var(--neon-pink);
+            box-shadow: 0 0 15px var(--neon-pink);
+        }
+
+        .card-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Cambia cover por contain */
+            
+        }
+
+        .card-content { padding: 20px; text-align: center; }
+        .tag {
+            color: var(--neon-pink);
+            font-size: 0.7rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: block;
+        }
+
+        .card-title { font-size: 1.2rem; margin-bottom: 5px; color: var(--text-dark); }
+        .card-desc { color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; }
+
+        footer {
+            background: #fff;
+            padding: 60px 20px;
+            text-align: center;
+            border-top: 4px solid var(--neon-pink);
+        }
+
+        .wa-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: #25d366;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 800;
+            transition: 0.3s;
+        }
+
+        .page { display: none; }
+        .page.active { display: block; animation: fadeIn 0.6s ease-out; }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            #cursor-dot, #cursor-ring { display: none; }
+            * { cursor: auto !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor-dot"></div>
+    <div id="cursor-ring"></div>
+
+    <header>
+        <img src="Logo ORIGINAL SIN FONDO_800.png" alt="Nica's Diseños" class="logo-main" onerror="this.src='https://placehold.co/300x150/ffffff/e91e63?text=Nica+s+Diseños'">
+    </header>
+
+    <nav class="nav-container">
+        <a href="javascript:void(0)" class="nav-link active" onclick="showTab('clasica', this)">Línea Clásica</a>
+        <a href="javascript:void(0)" class="nav-link" onclick="showTab('superior', this)">Línea Superior</a>
+    </nav>
+
+    <div class="catalog-section">
+        <div class="container">
+            
+            <div id="clasica" class="page active">
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-img-box"><img src="70596_800.png" alt="Taza Powerpuff"></div>
+                        <div class="card-content">
+                            <span class="tag">Mug Power</span>
+                            <h3 class="card-title">Taza Powerpuff</h3>
+                            <p class="card-desc">Diseño envolvente de gran colorido.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="70595_800.png" alt="Combo Powerpuff"></div>
+                        <div class="card-content">
+                            <span class="tag">Combo Clásico</span>
+                            <h3 class="card-title">Combo Powerpuff</h3>
+                            <p class="card-desc">Taza temática en caja de regalo.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="70591_800.png" alt="Super Mamá"></div>
+                        <div class="card-content">
+                            <span class="tag">Mug Heroína</span>
+                            <h3 class="card-title">Taza Super Mamá</h3>
+                            <p class="card-desc">Estilo cómic vibrante de alta resistencia.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="70597_800.png" alt="Combo Super Mamá"></div>
+                        <div class="card-content">
+                            <span class="tag">Combo Clásico</span>
+                            <h3 class="card-title">Combo Super Mamá</h3>
+                            <p class="card-desc">Taza temática en caja de regalo.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="Vaso Madre Guns_800.png" alt="Rock Mamá"></div>
+                        <div class="card-content">
+                            <span class="tag">Mug Rock</span>
+                            <h3 class="card-title">Taza Rock Mamá</h3>
+                            <p class="card-desc">Taza temática con diseño moderno.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="70585_800.png" alt="Mejor Abuela"></div>
+                        <div class="card-content">
+                            <span class="tag">Mug Abuela</span>
+                            <h3 class="card-title">Taza Mejor Abuela</h3>
+                            <p class="card-desc">Taza temática.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="70586_800.png" alt="Madre"></div>
+                        <div class="card-content">
+                            <span class="tag">Mug Madre</span>
+                            <h3 class="card-title">Taza Madre</h3>
+                            <p class="card-desc">Diseño elegante con detalles florales.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="70592_800.png" alt="Back to the Future"></div>
+                        <div class="card-content">
+                            <span class="tag">Mug Retro</span>
+                            <h3 class="card-title">Taza Back to the Future</h3>
+                            <p class="card-desc">Diseño Personalizado Retro.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="superior" class="page">
+                <div class="grid">
+                    <div class="card">
+                        <div class="card-img-box"><img src="70590_800.png" alt="Botella Sport Blanca"></div>
+                        <div class="card-content">
+                            <span class="tag">Termo Personalizado</span>
+                            <h3 class="card-title">Botella Blanca</h3>
+                            <p class="card-desc">Sublimación de alta calidad lista para tu diseño.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <!-- Solo a este contenedor le agregamos el style con fondo negro y contain -->
+                        <div class="card-img-box" style="background-color:whitesmoke !important;">
+                            <img src="termos arr_800.png" alt="Kit Cumpleaños" style="object-fit: contain;">
+                        </div>
+                        <div class="card-content">
+                            <span class="tag">Combo Regalo</span>
+                            <h3 class="card-title">Kit Cumpleaños</h3>
+                            <p class="card-desc">Termo personalizado, tarjeta de felicitación y caja lista para entregar.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="70594_800.png" alt="Vaso"></div>
+                        <div class="card-content">
+                            <span class="tag">Vaso Viajero</span>
+                            <h3 class="card-title">Vaso Metalizado</h3>
+                            <p class="card-desc">Sublimación HD sobre aluminio pulido.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box" style="background-color:whitesmoke !important;">
+                            <img src="profesores_800.png" alt="Kit Vaso" style="object-fit: contain;">
+                        </div>
+                        <div class="card-content">
+                            <span class="tag">Combo Regalo</span>
+                            <h3 class="card-title">Kit Vaso Metalizado</h3>
+                            <p class="card-desc">Vaso personalizado, tarjeta de felicitación y caja lista para entregar.</p>
+                        </div>
+                    </div>
+                     <div class="card">
+                         <!-- Solo a este contenedor le agregamos el style con fondo negro y contain -->
+                        <div class="card-img-box" style="background-color:whitesmoke !important;">
+                            <img src="70593_800.png" alt="Jarro" style="object-fit: contain;">
+                        </div>
+                        <div class="card-content">
+                            <span class="tag">Jarro Cervercero</span>
+                            <h3 class="card-title">Jarro Cervercero Opalizado</h3>
+                            <p class="card-desc">Diseño personalizado con acabado opalizado.</p>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-img-box"><img src="70589_800.png" alt="Caja Premium"></div>
+                        <div class="card-content">
+                            <span class="tag">Caja de Regalo</span>
+                            <h3 class="card-title">Jarro Cervecero con Caja de Regalo</h3>
+                            <p class="card-desc">Presentación elegante para regalar.</p>
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <h2 style="margin-bottom: 20px;">¿Necesitas algo personalizado?</h2>
+        <a href="https://wa.me/50588888888" class="wa-btn">
+            <i class="fab fa-whatsapp"></i> Contactar por WhatsApp
+        </a>
+        <p style="margin-top: 40px; font-size: 0.8rem; opacity: 0.6;">© 2026 Nica's Diseños - Nicaragua</p>
+    </footer>
+
+    <script>
+        const dot = document.getElementById('cursor-dot');
+        const ring = document.getElementById('cursor-ring');
+
+        document.addEventListener('mousemove', (e) => {
+            dot.style.transform = `translate(${e.clientX - 5}px, ${e.clientY - 5}px)`;
+            ring.style.transform = `translate(${e.clientX - 19}px, ${e.clientY - 19}px)`;
+        });
+
+        function showTab(id, el) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.querySelectorAll('.nav-link').forEach(l => l.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
+            el.classList.add('active');
+            window.scrollTo({top: 450, behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>
